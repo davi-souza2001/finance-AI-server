@@ -5,18 +5,18 @@
 # @name healthCheck
 GET {{baseUrl}}/health
 
-
 ###
 
-# Create room
-# @name createRoom
+# Create user
+# @name createUser
 POST {{baseUrl}}/users
 Content-Type: application/json
 
 {
   "name": "John Doe",
   "email": "john.doe@example.com",
-  "password": "12345678"
+  "password": "12345678",
+  "monthlySpending": 1000
 }
 
 ###
@@ -36,3 +36,55 @@ Content-Type: application/json
   "email": "john.doe@example.com",
   "password": "12345678"
 }
+
+###
+
+# Create category
+# @name createCategory
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "name": "Category 1"
+}
+
+###
+
+# Create item
+# @name createItem
+POST {{baseUrl}}/items
+Content-Type: application/json
+
+{
+  "name": "Item 1",
+  "description": "Description 1",
+  "categoryId": "96d21a67-06a6-4df3-b237-3adf972b2bed",
+  "userId": "a42dd495-cc6e-4b00-bbed-03a1a1d1fb54",
+  "price": 100
+}
+
+###
+
+# Delete item
+# @name deleteItem
+DELETE {{baseUrl}}/items/{{createItem.response.body.itemId}}
+Content-Type: application/json
+
+{
+  "userId": "a42dd495-cc6e-4b00-bbed-03a1a1d1fb54",
+  "itemId": "d6217436-a940-4081-9002-e13d4566259b"
+}
+
+###
+
+# Get categories
+# @name getCategories
+GET {{baseUrl}}/categories
+
+###
+
+# Get items by user
+# @name getItemsByUser
+GET {{baseUrl}}/items/a42dd495-cc6e-4b00-bbed-03a1a1d1fb54
+
+###

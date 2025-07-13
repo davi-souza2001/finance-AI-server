@@ -7,9 +7,16 @@ import {
   type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import { env } from './env.ts'
-import { createUserRoute } from './http/routes/create-user.ts'
-import { getUsersRoute } from './http/routes/get-users.ts'
-import { loginRoute } from './http/routes/login.ts'
+import {
+  createCategoryRoute,
+  createItemRoute,
+  createUserRoute,
+  deleteItemRoute,
+  getCategoriesRoute,
+  getItemByUserRoute,
+  getUsersRoute,
+  loginRoute,
+} from './http/index.ts'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -29,6 +36,11 @@ app.get('/health', () => {
 app.register(createUserRoute)
 app.register(getUsersRoute)
 app.register(loginRoute)
+app.register(createCategoryRoute)
+app.register(getCategoriesRoute)
+app.register(createItemRoute)
+app.register(deleteItemRoute)
+app.register(getItemByUserRoute)
 
 app.listen({ port: env.PORT }).then(() => {
   console.log(`Server is running on port ${env.PORT}`)

@@ -12,11 +12,12 @@ export const createUserRoute: FastifyPluginCallbackZod = (app) => {
           name: z.string().min(1),
           email: z.string().email(),
           password: z.string().min(8),
+          monthlySpending: z.number().min(0),
         }),
       },
     },
     async (request, reply) => {
-      const { name, email, password } = request.body
+      const { name, email, password, monthlySpending } = request.body
 
       const result = await db
         .insert(schema.users)
@@ -24,6 +25,7 @@ export const createUserRoute: FastifyPluginCallbackZod = (app) => {
           name,
           email,
           password,
+          monthlySpending,
         })
         .returning()
 
