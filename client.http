@@ -5,41 +5,34 @@
 # @name healthCheck
 GET {{baseUrl}}/health
 
-###
-
-# Get rooms
-# @name getRooms
-GET {{baseUrl}}/rooms
 
 ###
 
 # Create room
 # @name createRoom
-POST {{baseUrl}}/rooms
+POST {{baseUrl}}/users
 Content-Type: application/json
 
 {
-  "name": "Sala de teste",
-  "description": "Essa é uma sala de teste"
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "12345678"
 }
 
 ###
 
-@roomId = {{createRoom.response.body.$.roomId}}
+# Get users
+# @name getUsers
+GET {{baseUrl}}/users
 
 ###
 
-# Get room questions
-# @name getRoomQuestions
-GET {{baseUrl}}/rooms/{{roomId}}/questions
-
-###
-
-# Create question
-# @name createQuestion
-POST {{baseUrl}}/rooms/3bedbc7f-9cc3-4d1c-a43f-09d0c92a5f4b/questions
+# Login
+# @name login
+POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-  "question": "O que é Vue.js e a sua diferença em relação ao Angular?"
+  "email": "john.doe@example.com",
+  "password": "12345678"
 }
