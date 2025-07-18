@@ -56,8 +56,8 @@ POST {{baseUrl}}/items
 Content-Type: application/json
 
 {
-  "name": "Item 1",
-  "description": "Description 1",
+  "name": "Item 2",
+  "description": "Description 2",
   "categoryId": "96d21a67-06a6-4df3-b237-3adf972b2bed",
   "userId": "a42dd495-cc6e-4b00-bbed-03a1a1d1fb54",
   "price": 100

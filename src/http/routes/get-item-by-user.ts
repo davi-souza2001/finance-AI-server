@@ -24,6 +24,7 @@ export const getItemByUserRoute: FastifyPluginCallbackZod = (app) => {
           description: schema.items.description,
           categoryId: schema.items.categoryId,
           price: schema.items.price,
+          createdAt: schema.items.createdAt,
         })
         .from(schema.items)
         .where(eq(schema.items.userId, userId))
