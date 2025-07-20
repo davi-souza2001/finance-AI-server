@@ -1,4 +1,5 @@
 import { fastifyCors } from '@fastify/cors'
+import { fastifyJwt } from '@fastify/jwt'
 import { fastifyMultipart } from '@fastify/multipart'
 import { fastify } from 'fastify'
 import {
@@ -20,6 +21,10 @@ import {
 } from './http/index.ts'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
+
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+})
 
 app.register(fastifyCors, {
   origin: 'http://localhost:5173',

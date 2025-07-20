@@ -11,20 +11,17 @@ export const loginRoute: FastifyPluginCallbackZod = (app) => {
     {
       schema: {
         body: z.object({
-          email: z.string().email(),
+          email: z.email(),
           password: z.string().min(8),
         }),
       },
     },
-    async (request) => {
+    async (request, reply) => {
       const { email, password } = request.body
 
       const result = await db
         .select({
           id: schema.users.id,
-          name: schema.users.name,
-          email: schema.users.email,
-          createdAt: schema.users.createdAt,
           password: schema.users.password,
         })
         .from(schema.users)
@@ -34,20 +31,19 @@ export const loginRoute: FastifyPluginCallbackZod = (app) => {
         throw new Error('User not found')
       }
 
-      const doesPasswordMatches = await compare(password, result[0]?.password)
+      const user = result[0]
+
+      const doesPasswordMatches = await compare(password, user.password)
 
       if (!doesPasswordMatches) {
         throw new Error('Invalid password')
       }
 
-      const user = {
-        id: result[0]?.id,
-        name: result[0]?.name,
-        email: result[0]?.email,
-        createdAt: result[0]?.createdAt,
-      }
+      const token = await reply.jwtSign({
+        sub: user.id,
+      })
 
-      return user
+      return { token }
     }
   )
 }
