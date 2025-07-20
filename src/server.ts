@@ -39,15 +39,24 @@ app.get('/health', () => {
   return 'OK'
 })
 
+// Public routes
 app.register(createUserRoute)
-app.register(getUsersRoute)
 app.register(loginRoute)
-app.register(createCategoryRoute)
-app.register(getCategoriesRoute)
-app.register(createItemRoute)
-app.register(deleteItemRoute)
-app.register(getItemByUserRoute)
-app.register(getUserByIdRoute)
+
+// Authenticated routes
+app.register((authenticatedRoutes) => {
+  authenticatedRoutes.addHook('onRequest', async (request) => {
+    await request.jwtVerify()
+  })
+
+  authenticatedRoutes.register(getUsersRoute)
+  authenticatedRoutes.register(createCategoryRoute)
+  authenticatedRoutes.register(getCategoriesRoute)
+  authenticatedRoutes.register(createItemRoute)
+  authenticatedRoutes.register(deleteItemRoute)
+  authenticatedRoutes.register(getItemByUserRoute)
+  authenticatedRoutes.register(getUserByIdRoute)
+})
 
 app.listen({ port: env.PORT }).then(() => {
   console.log(`Server is running on port ${env.PORT}`)
