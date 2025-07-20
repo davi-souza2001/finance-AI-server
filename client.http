@@ -13,8 +13,8 @@ POST {{baseUrl}}/users
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "email": "john.doe@example.com",
+  "name": "teste 1",
+  "email": "teste1@example.com",
   "password": "12345678",
   "monthlySpending": 1000
 }
@@ -33,9 +33,14 @@ POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-  "email": "john.doe@example.com",
+  "email": "teste2@example.com",
   "password": "12345678"
 }
+###
+
+# Get user by id
+# @name getUserById
+GET {{baseUrl}}/get-user-by-id/56364494-6640-469d-ba22-70d6d5c40687
 
 ###
 

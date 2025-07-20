@@ -1,23 +1,21 @@
-import { compare } from 'bcryptjs'
 import { and, eq } from 'drizzle-orm'
 import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
 import { z } from 'zod/v4'
 import { db } from '../../db/connection.ts'
 import { schema } from '../../db/schema/index.ts'
 
-export const loginRoute: FastifyPluginCallbackZod = (app) => {
-  app.post(
-    '/login',
+export const getUserByIdRoute: FastifyPluginCallbackZod = (app) => {
+  app.get(
+    '/get-user-by-id/:id',
     {
       schema: {
-        body: z.object({
-          email: z.string().email(),
-          password: z.string().min(8),
+        params: z.object({
+          id: z.string(),
         }),
       },
     },
     async (request) => {
-      const { email, password } = request.body
+      const { id } = request.params
 
       const result = await db
         .select({
@@ -28,16 +26,10 @@ export const loginRoute: FastifyPluginCallbackZod = (app) => {
           password: schema.users.password,
         })
         .from(schema.users)
-        .where(and(eq(schema.users.email, email)))
+        .where(and(eq(schema.users.id, id)))
 
       if (result.length === 0) {
         throw new Error('User not found')
-      }
-
-      const doesPasswordMatches = await compare(password, result[0]?.password)
-
-      if (!doesPasswordMatches) {
-        throw new Error('Invalid password')
       }
 
       const user = {

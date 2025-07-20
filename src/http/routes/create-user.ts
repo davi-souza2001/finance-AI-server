@@ -1,3 +1,4 @@
+import { hash } from 'bcryptjs'
 import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
 import { z } from 'zod/v4'
 import { db } from '../../db/connection.ts'
@@ -10,7 +11,7 @@ export const createUserRoute: FastifyPluginCallbackZod = (app) => {
       schema: {
         body: z.object({
           name: z.string().min(1),
-          email: z.string().email(),
+          email: z.email(),
           password: z.string().min(8),
           monthlySpending: z.number().min(0),
         }),
@@ -18,13 +19,14 @@ export const createUserRoute: FastifyPluginCallbackZod = (app) => {
     },
     async (request, reply) => {
       const { name, email, password, monthlySpending } = request.body
+      const password_hash = await hash(password, 6)
 
       const result = await db
         .insert(schema.users)
         .values({
           name,
           email,
-          password,
+          password: password_hash,
           monthlySpending,
         })
         .returning()

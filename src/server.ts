@@ -14,6 +14,7 @@ import {
   deleteItemRoute,
   getCategoriesRoute,
   getItemByUserRoute,
+  getUserByIdRoute,
   getUsersRoute,
   loginRoute,
 } from './http/index.ts'
@@ -41,6 +42,7 @@ app.register(getCategoriesRoute)
 app.register(createItemRoute)
 app.register(deleteItemRoute)
 app.register(getItemByUserRoute)
+app.register(getUserByIdRoute)
 
 app.listen({ port: env.PORT }).then(() => {
   console.log(`Server is running on port ${env.PORT}`)
