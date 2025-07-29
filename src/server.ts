@@ -13,6 +13,7 @@ import {
   createItemRoute,
   createUserRoute,
   deleteItemRoute,
+  generateItemRoute,
   getCategoriesRoute,
   getItemByUserRoute,
   getUserByIdRoute,
@@ -53,6 +54,7 @@ app.register((authenticatedRoutes) => {
   authenticatedRoutes.register(createCategoryRoute)
   authenticatedRoutes.register(getCategoriesRoute)
   authenticatedRoutes.register(createItemRoute)
+  authenticatedRoutes.register(generateItemRoute)
   authenticatedRoutes.register(deleteItemRoute)
   authenticatedRoutes.register(getItemByUserRoute)
   authenticatedRoutes.register(getUserByIdRoute)
