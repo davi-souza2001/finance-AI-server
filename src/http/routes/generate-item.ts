@@ -51,9 +51,17 @@ export const generateItemRoute: FastifyPluginCallbackZod = (app) => {
               ', '
             )}. Deve ser separado por categoria, e quanto foi gasto em cada categoria. Me mande a resposta em JSON, com a seguinte estrutura:
             {
-              "category": "nome da categoria",
+              "category": "id da categoria",
               "value": "valor gasto"
             }
+            
+            O nome da categoria deve ser o nome da categoria da mesma forma que é passada aqui no prompt, preserve os mesmos nomes das categorias: ${resultsNames.join(
+              ', '
+            )}.
+            No print, interprete se há no valor mostrado um traço em cima dele, ou algo que presente que aquela compra foi cancelada, ou extornada. Caso foi, não contabilize.
+            Nas categorias que não haver gastos, não é preciso retornar nada.
+            A estrutura não deve haver nada mais além do JSON. Texto, aspas, NADA. A única coisa que deve haver além do json é se a resposta
+            for que a imagem não é compatível.
             Caso você veja que a imagem não é um print, ou o print não está de acordo com esse tema, retorne "Imagem não é compatível com o sistema". 
             Não responde nem faça nada mais além disso.
             `,
